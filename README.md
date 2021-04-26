@@ -18,8 +18,3 @@ Made with HTML, CSS + Bootstrap 5 Beta, and JS.
 -   [Chris Ried](https://unsplash.com/@cdr6934)
 -   [Serena Rubbi](https://unsplash.com/@sseree)
 -   [Favicon.io](https://favicon.io/favicon-generator/)
-
-### Web Programming Lecture Lab. Assistant:
-
--   [Yusup MC](https://yusupmc.github.io/)
--   Aqillah
