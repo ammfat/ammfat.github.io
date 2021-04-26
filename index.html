@@ -165,21 +165,29 @@
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-md-6">
-                        <form>
+                        <div class="alert alert-primary alert-dismissible fade show border-0 success-alert d-none" role="alert" style="color: #1e7c1e">
+                            <strong>Thanks!</strong> Your message has been recorded.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        <form name="contact-form">
                             <div class="mb-3">
                                 <label for="name" class="form-label">Your Name:</label>
-                                <input type="text" class="form-control" id="name" aria-describedby="name" placeholder="Kimi no Namae wa" />
+                                <input type="text" class="form-control" id="name" aria-describedby="name" name="name" placeholder="Kimi no Namae wa" />
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email:</label>
-                                <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="yourmail@example.com" />
+                                <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email" placeholder="yourmail@example.com" />
                             </div>
                             <div class="mb-3">
                                 <label for="message" class="form-label">Message:</label>
-                                <textarea class="form-control" id="message" rows="3" placeholder="Your message here..."></textarea>
+                                <textarea class="form-control" id="message" rows="3" name="message" placeholder="Your message here..."></textarea>
                             </div>
 
-                            <button type="submit" class="btn btn-outline-info float-end">Send It!</button>
+                            <button class="btn btn-info btn-loading float-end d-none" type="button" disabled>
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                Loading...
+                            </button>
+                            <button type="submit" class="btn btn-info btn-send float-end">Send It!</button>
                         </form>
                     </div>
                 </div>
@@ -196,7 +204,6 @@
 
         <!-- Footer -->
         <footer class="text-white pt-4 pb-2" style="background-color: #343a40">
-            <!-- #457b9d -->
             <p class="text-center">
                 <a href="https://github.com/ammfat/" target="_blank"><img src="img/connect/github.png" alt="Github" width="35" class="img-thumbnail mx-2" /></a>
                 <a href="https://www.hackerrank.com/ammfat" target="_blank"><img src="img/connect/hackerrank.png" alt="Hackerrank" width="35" class="img-thumbnail mx-2" /></a>
@@ -211,6 +218,8 @@
 
         <!-- TypeIt Script -->
         <script src="https://cdn.jsdelivr.net/npm/typeit@7.0.4/dist/typeit.min.js"></script>
+
+        <!-- User Script -->
         <script src="script.js"></script>
     </body>
 </html>
