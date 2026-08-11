@@ -1,8 +1,8 @@
 # Ahmad Maulana Malik Fattah — personal site
 
-Astro + Tailwind rebuild of [ammfat.github.io](https://ammfat.github.io).
+Astro + Tailwind site at [ammfat.github.io](https://ammfat.github.io).
 
-Legacy 2022 HTML site is tagged `v1-legacy`.
+Operator-style profile: grouped tech stack with depth tags, closed-source narratives, and selected public work. Legacy 2022 HTML is tagged `v1-legacy`.
 
 ## Develop
 
@@ -11,12 +11,6 @@ npm install
 npm run dev
 ```
 
-## Concepts (evaluation)
+## Deploy
 
-Temporary routes while comparing styles:
-
-- `/a-terminal` — Operator's status page
-- `/b-platform` — Interactive platform diagram
-- `/c-editorial` — Editorial / text-forward
-
-`/` is a chooser until one concept is promoted.
+Pushes to `main` build and publish via GitHub Actions (`.github/workflows/deploy.yml`).
