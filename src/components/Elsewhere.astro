@@ -1,0 +1,26 @@
+---
+import { site } from '../content/site';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+const links = [
+  { href: site.links.github, label: 'GitHub' },
+  { href: site.links.linkedin, label: 'LinkedIn' },
+  { href: site.links.credly, label: 'Credly' },
+  { href: site.links.medium, label: 'Medium' },
+];
+---
+
+<nav class={className} aria-label="Elsewhere">
+  {
+    links.map((link, i) => (
+      <>
+        {i > 0 && <span aria-hidden="true"> · </span>}
+        <a href={link.href} rel="noopener noreferrer">{link.label}</a>
+      </>
+    ))
+  }
+</nav>

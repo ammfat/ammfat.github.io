@@ -1,0 +1,142 @@
+---
+import Base from '../../layouts/Base.astro';
+import Elsewhere from '../../components/Elsewhere.astro';
+import { site } from '../../content/site';
+import { stackGroups } from '../../content/stack';
+import { roles } from '../../content/roles';
+import { getProjects } from '../../lib/projects';
+import { render } from 'astro:content';
+
+const projects = await getProjects();
+const rendered = await Promise.all(
+  projects.map(async (p) => ({
+    ...p,
+    Content: (await render(p)).Content,
+  })),
+);
+const depthPad = { production: 'prod', shipped: 'ship', explored: 'expl' } as const;
+---
+
+<Base
+  title={`${site.shortName} · operator`}
+  description={site.tagline}
+  bodyClass="bg-[#0c0e0c] text-[#c8d0c4] font-mono antialiased min-h-screen"
+>
+  <link
+    slot="head"
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <main class="mx-auto max-w-3xl px-4 py-8 text-[13px] leading-relaxed sm:px-6 sm:text-sm">
+    <p class="mb-6 text-[#6a7568]">
+      <a href="/" class="text-[#6a7568] underline decoration-[#2a3028] hover:text-[#c8d0c4]">← concepts</a>
+    </p>
+
+    <header class="border border-[#2a3028] bg-[#101410] p-4 sm:p-5">
+      <pre class="overflow-x-auto whitespace-pre text-[#9aab94]">status  OK
+host    {site.shortName}
+role    {site.role}
+loc     {site.location}
+sys     BLIV · Kemendagri national data platform
+ingest  5+ TiB/day
+pipes   300+ Apache NiFi</pre>
+      <p class="mt-4 max-w-prose text-[#c8d0c4]">{site.tagline}</p>
+    </header>
+
+    <section class="mt-8" aria-labelledby="work-heading">
+      <h2 id="work-heading" class="mb-3 text-[#6a7568]"># selected work</h2>
+      <ul class="space-y-0 border border-[#2a3028]">
+        {
+          rendered.map((p) => (
+            <li class="border-b border-[#2a3028] last:border-b-0">
+              <details class="group open:bg-[#101410]">
+                <summary class="cursor-pointer list-none px-3 py-2 hover:bg-[#141814] [&::-webkit-details-marker]:hidden">
+                  <span class="text-[#7d9a6e]">[{p.data.layer}]</span>{' '}
+                  <span class="font-medium text-[#e4eadc]">{p.data.title}</span>
+                  {p.data.closed && <span class="text-[#6a7568]"> · closed</span>}
+                </summary>
+                <div class="space-y-2 border-t border-[#2a3028] px-3 py-3 text-[#a8b4a4]">
+                  <p>{p.data.summary}</p>
+                  <div class="[&_p]:mb-2 [&_strong]:font-medium [&_strong]:text-[#e4eadc]">
+                    <p.Content />
+                  </div>
+                  <p class="text-[#6a7568]">
+                    stack: {p.data.stack.join(' · ')}
+                    {p.data.repo && (
+                      <>
+                        {' · '}
+                        <a class="text-[#9aab94] underline" href={p.data.repo} rel="noopener noreferrer">
+                          repo
+                        </a>
+                      </>
+                    )}
+                  </p>
+                </div>
+              </details>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="mt-8" aria-labelledby="stack-heading">
+      <h2 id="stack-heading" class="mb-3 text-[#6a7568]"># stack · depth</h2>
+      <div class="space-y-5">
+        {
+          stackGroups.map((group) => (
+            <div>
+              <h3 class="mb-1 text-[#9aab94]">{group.label}</h3>
+              <ul class="font-mono">
+                {group.items.map((item) => (
+                  <li class="flex justify-between gap-4 border-b border-dotted border-[#2a3028] py-0.5">
+                    <span>
+                      {item.name}
+                      {item.note && <span class="text-[#6a7568]"> — {item.note}</span>}
+                    </span>
+                    <span class="shrink-0 text-[#6a7568]">{depthPad[item.depth]}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+      <p class="mt-3 text-[#6a7568]">prod = paged for it · ship = delivered · expl = prototype / coursework</p>
+    </section>
+
+    <section class="mt-8" aria-labelledby="roles-heading">
+      <h2 id="roles-heading" class="mb-3 text-[#6a7568]"># roles</h2>
+      <ul class="space-y-4">
+        {
+          roles.map((role) => (
+            <li>
+              <p class="text-[#e4eadc]">
+                {role.title} <span class="text-[#6a7568]">@</span> {role.org}
+              </p>
+              <p class="text-[#6a7568]">
+                {role.start} → {role.end} · {role.location}
+              </p>
+              <ul class="mt-1 list-none space-y-0.5 text-[#a8b4a4]">
+                {role.bullets.slice(0, 2).map((b) => (
+                  <li>— {b}</li>
+                ))}
+              </ul>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <footer class="mt-10 border-t border-[#2a3028] pt-4 text-[#6a7568]">
+      <Elsewhere class="text-[#9aab94] [&_a]:underline [&_a]:decoration-[#2a3028] hover:[&_a]:text-[#e4eadc]" />
+      <p class="mt-2">{site.openTo}</p>
+      <p class="mt-1">
+        Writing →{' '}
+        <a class="underline decoration-[#2a3028] hover:text-[#e4eadc]" href={site.links.medium} rel="noopener noreferrer"
+          >Medium</a
+        >
+      </p>
+    </footer>
+  </main>
+</Base>

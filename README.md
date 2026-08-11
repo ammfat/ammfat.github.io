@@ -1,20 +1,22 @@
-# Personal Landing Page
+# Ahmad Maulana Malik Fattah — personal site
 
-Made with HTML, CSS + Bootstrap 5 Beta, and JS.
+Astro + Tailwind rebuild of [ammfat.github.io](https://ammfat.github.io).
 
----
+Legacy 2022 HTML site is tagged `v1-legacy`.
 
-## Thanks for All Supporters
+## Develop
 
-### Design Inspired by:
+```bash
+npm install
+npm run dev
+```
 
--   [Web Programming Unpas](https://www.youtube.com/watch?v=LkR-9Z1sle8&)
--   [AnbiDev](https://www.anbidev.com/)
+## Concepts (evaluation)
 
-### Image and Favicon:
+Temporary routes while comparing styles:
 
--   [Maurice Erlean](https://unsplash.com/@mauricemcerlean)
--   [Possessed Photography](https://unsplash.com/@possessedphotography)
--   [Chris Ried](https://unsplash.com/@cdr6934)
--   [Serena Rubbi](https://unsplash.com/@sseree)
--   [Favicon.io](https://favicon.io/favicon-generator/)
+- `/a-terminal` — Operator's status page
+- `/b-platform` — Interactive platform diagram
+- `/c-editorial` — Editorial / text-forward
+
+`/` is a chooser until one concept is promoted.

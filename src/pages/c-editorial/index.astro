@@ -1,0 +1,179 @@
+---
+import Base from '../../layouts/Base.astro';
+import Elsewhere from '../../components/Elsewhere.astro';
+import { site } from '../../content/site';
+import { stackGroups } from '../../content/stack';
+import { roles } from '../../content/roles';
+import { getProjects } from '../../lib/projects';
+import { render } from 'astro:content';
+
+const projects = await getProjects();
+const rendered = await Promise.all(
+  projects.map(async (p) => ({
+    ...p,
+    Content: (await render(p)).Content,
+  })),
+);
+---
+
+<Base
+  title={`${site.name} · ${site.role}`}
+  description={site.tagline}
+  bodyClass="bg-[#faf8f5] text-[#1a1a1a] antialiased min-h-screen"
+>
+  <link
+    slot="head"
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Literata:opsz,wght@7..72,400;7..72,600;7..72,700&display=swap"
+    rel="stylesheet"
+  />
+
+  <div
+    class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_#efe8dc_0%,_#faf8f5_55%)]"
+  >
+  </div>
+
+  <main class="mx-auto max-w-2xl px-5 py-14 sm:px-6 sm:py-20">
+    <p class="mb-10 text-sm text-[#6e6a63]">
+      <a href="/" class="underline decoration-[#d4cfc4] hover:text-[#1a1a1a]">← concepts</a>
+    </p>
+
+    <header>
+      <p
+        class="font-[family-name:var(--font-editorial)] text-[clamp(2.25rem,6vw,3.25rem)] font-semibold leading-[1.1] tracking-[-0.02em] text-[#0f0f0f]"
+      >
+        {site.name}
+      </p>
+      <p class="mt-3 font-[family-name:var(--font-editorial-sans)] text-lg font-medium text-[#2a4a3a]">
+        {site.role}
+      </p>
+      <div
+        class="mt-8 space-y-4 font-[family-name:var(--font-editorial)] text-lg leading-relaxed text-[#2c2a26]"
+      >
+        <p>{site.tagline}</p>
+        <p>{site.headline}</p>
+        <p>
+          ClickHouse Certified Developer — Associate through Professional to Advanced on{' '}
+          <a class="underline decoration-[#b7c4b4] underline-offset-2" href={site.links.credly} rel="noopener noreferrer"
+            >Credly</a
+          >. Writing on{' '}
+          <a class="underline decoration-[#b7c4b4] underline-offset-2" href={site.links.medium} rel="noopener noreferrer"
+            >Medium</a
+          >.
+        </p>
+      </div>
+    </header>
+
+    <section class="mt-16" aria-labelledby="work-heading">
+      <h2
+        id="work-heading"
+        class="font-[family-name:var(--font-editorial-sans)] text-sm font-semibold uppercase tracking-[0.08em] text-[#6e6a63]"
+      >
+        Selected work
+      </h2>
+      <ul class="mt-8 space-y-12">
+        {
+          rendered.map((p) => (
+            <li>
+              <h3 class="font-[family-name:var(--font-editorial)] text-2xl font-semibold tracking-tight text-[#0f0f0f]">
+                {p.data.title}
+              </h3>
+              <p class="mt-1 font-[family-name:var(--font-editorial-sans)] text-sm text-[#6e6a63]">
+                {p.data.summary}
+                {p.data.repo && (
+                  <>
+                    {' '}
+                    <a
+                      class="text-[#2a4a3a] underline decoration-[#b7c4b4] underline-offset-2"
+                      href={p.data.repo}
+                      rel="noopener noreferrer"
+                    >
+                      Repository
+                    </a>
+                  </>
+                )}
+                {p.data.closed && !p.data.repo && <span> Closed-source.</span>}
+              </p>
+              <div
+                class="mt-4 font-[family-name:var(--font-editorial)] text-[1.05rem] leading-relaxed text-[#2c2a26] [&_p]:mb-3 [&_strong]:font-semibold"
+              >
+                <p.Content />
+              </div>
+              <p class="mt-3 font-[family-name:var(--font-editorial-sans)] text-sm text-[#6e6a63]">
+                {p.data.stack.join(' · ')}
+              </p>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="mt-20" aria-labelledby="stack-heading">
+      <h2
+        id="stack-heading"
+        class="font-[family-name:var(--font-editorial-sans)] text-sm font-semibold uppercase tracking-[0.08em] text-[#6e6a63]"
+      >
+        Stack
+      </h2>
+      <p class="mt-3 font-[family-name:var(--font-editorial)] text-[#2c2a26]">
+        Grouped by position in a data platform. Depth tags: <em>production</em> (paged for it),{' '}
+        <em>shipped</em> (delivered), <em>explored</em> (prototype or coursework).
+      </p>
+      <div class="mt-8 space-y-8">
+        {
+          stackGroups.map((group) => (
+            <div>
+              <h3 class="font-[family-name:var(--font-editorial-sans)] text-base font-semibold text-[#0f0f0f]">
+                {group.label}
+              </h3>
+              <ul class="mt-2 columns-1 gap-x-8 sm:columns-2">
+                {group.items.map((item) => (
+                  <li class="mb-1 break-inside-avoid font-[family-name:var(--font-editorial-sans)] text-sm text-[#3a3832]">
+                    {item.name}
+                    <span class="text-[#8a857c]"> · {item.depth}</span>
+                    {item.note && <span class="text-[#8a857c]"> — {item.note}</span>}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="mt-20" aria-labelledby="roles-heading">
+      <h2
+        id="roles-heading"
+        class="font-[family-name:var(--font-editorial-sans)] text-sm font-semibold uppercase tracking-[0.08em] text-[#6e6a63]"
+      >
+        Experience
+      </h2>
+      <ul class="mt-8 space-y-8">
+        {
+          roles.map((role) => (
+            <li>
+              <p class="font-[family-name:var(--font-editorial)] text-xl font-semibold text-[#0f0f0f]">
+                {role.title}
+              </p>
+              <p class="font-[family-name:var(--font-editorial-sans)] text-sm text-[#6e6a63]">
+                {role.org} · {role.start} – {role.end}
+              </p>
+              <ul class="mt-3 list-disc space-y-1 pl-5 font-[family-name:var(--font-editorial)] text-[#2c2a26]">
+                {role.bullets.map((b) => (
+                  <li>{b}</li>
+                ))}
+              </ul>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <footer class="mt-20 border-t border-[#e5e0d6] pt-8">
+      <Elsewhere
+        class="font-[family-name:var(--font-editorial-sans)] text-[#2a4a3a] [&_a]:underline [&_a]:decoration-[#b7c4b4] [&_a]:underline-offset-2"
+      />
+      <p class="mt-4 font-[family-name:var(--font-editorial)] text-[#2c2a26]">{site.openTo}</p>
+      <p class="mt-2 font-[family-name:var(--font-editorial-sans)] text-sm text-[#6e6a63]">{site.location}</p>
+    </footer>
+  </main>
+</Base>
