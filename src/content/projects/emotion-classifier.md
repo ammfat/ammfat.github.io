@@ -1,11 +1,14 @@
 ---
 title: emotion-classifier
 layer: ai
+layers:
+  - ai
 stack:
   - Keras
   - FastAPI
   - Streamlit
   - MTCNN
+  - VGG
 repo: https://github.com/ammfat/emotion-classifier
 summary: Facial emotion classification web app. MTCNN face detection, VGG models, FastAPI + Streamlit.
 closed: false

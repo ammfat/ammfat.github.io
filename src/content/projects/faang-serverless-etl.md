@@ -1,6 +1,8 @@
 ---
 title: faang-serverless-etl
 layer: orchestration
+layers:
+  - orchestration
 stack:
   - BigQuery
   - Python

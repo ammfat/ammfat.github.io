@@ -2,7 +2,7 @@
 
 Astro + Tailwind site at [ammfat.github.io](https://ammfat.github.io).
 
-Operator-style profile: grouped tech stack with depth tags, closed-source narratives, and selected public work. Legacy 2022 HTML is tagged `v1-legacy`.
+Operator-style profile: grouped tech stack with depth tags, closed-source narratives, and selected public work.
 
 ## Develop
 

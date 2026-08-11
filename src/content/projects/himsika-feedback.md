@@ -1,6 +1,9 @@
 ---
 title: himsika-event-feedback-analysis
 layer: orchestration
+layers:
+  - orchestration
+  - analytics
 stack:
   - Apache Airflow
   - BigQuery

@@ -1,11 +1,12 @@
 ---
-title: Superset that doesn't rot
-layer: serving
+title: Superset Dev Tools
+layer: analytics
+layers:
+  - analytics
 stack:
   - Apache Superset
   - Python
-  - ClickHouse
-summary: Programmatic dataset swaps and bulk chart resave across hundreds of charts, with dry-run, apply, and revert.
+summary: No more wasting time on low-level maintenance. Effortlessly swap datasets and bulk-resave 100+ charts. For sure it's all reversible.
 closed: true
 ---
 

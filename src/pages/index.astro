@@ -15,7 +15,11 @@ const rendered = await Promise.all(
     Content: (await render(p)).Content,
   })),
 );
-const depthPad = { production: 'prod', shipped: 'ship', explored: 'expl' } as const;
+const proficiencyLabel = {
+  production: 'production',
+  shipped: 'personal projects',
+  explored: 'exploring',
+} as const;
 ---
 
 <Base
@@ -46,7 +50,7 @@ const depthPad = { production: 'prod', shipped: 'ship', explored: 'expl' } as co
 role    {site.role}
 loc     {site.location}
 sys     BLIV · Kemendagri national data platform
-cert    ClickHouse Certified Developer (A → P → Adv)</pre>
+cert    ClickHouse Certified Developer</pre>
         <p class="mt-4 max-w-prose text-[#c8d0c4]">{site.tagline}</p>
       </div>
     </header>
@@ -67,14 +71,16 @@ cert    ClickHouse Certified Developer (A → P → Adv)</pre>
 
     <section class="mt-8" aria-labelledby="work-heading">
       <h2 id="work-heading" class="mb-3 text-[#6a7568]"># selected work</h2>
-      <p class="mb-2 text-[#6a7568]">Most of what I build is closed. Expand an entry for the narrative.</p>
+      <p class="mb-2 text-[#6a7568]">Read the journeys of what I shipped.</p>
       <ul class="border border-[#2a3028]">
         {
           rendered.map((p, i) => (
             <li class="border-b border-[#2a3028] last:border-b-0">
               <details class="group open:bg-[#101410]" open={i === 0}>
                 <summary class="cursor-pointer list-none px-3 py-2.5 hover:bg-[#141814] [&::-webkit-details-marker]:hidden">
-                  <span class="text-[#7d9a6e]">[{p.data.layer}]</span>{' '}
+                  <span class="text-[#7d9a6e]">
+                    [{(p.data.layers && p.data.layers.length ? p.data.layers : [p.data.layer]).join(' · ')}]
+                  </span>{' '}
                   <span class="font-medium text-[#e4eadc]">{p.data.title}</span>
                   {p.data.closed ? (
                     <span class="text-[#6a7568]"> · closed</span>
@@ -107,7 +113,7 @@ cert    ClickHouse Certified Developer (A → P → Adv)</pre>
     </section>
 
     <section class="mt-8" aria-labelledby="stack-heading">
-      <h2 id="stack-heading" class="mb-3 text-[#6a7568]"># stack · depth</h2>
+      <h2 id="stack-heading" class="mb-3 text-[#6a7568]"># stack and proficiency</h2>
       <div class="space-y-5">
         {
           stackGroups.map((group) => (
@@ -120,7 +126,7 @@ cert    ClickHouse Certified Developer (A → P → Adv)</pre>
                       {item.name}
                       {item.note && <span class="text-[#6a7568]"> — {item.note}</span>}
                     </span>
-                    <span class="shrink-0 text-[#6a7568]">{depthPad[item.depth]}</span>
+                    <span class="shrink-0 text-[#6a7568]">{proficiencyLabel[item.depth]}</span>
                   </li>
                 ))}
               </ul>
@@ -128,7 +134,7 @@ cert    ClickHouse Certified Developer (A → P → Adv)</pre>
           ))
         }
       </div>
-      <p class="mt-3 text-[#6a7568]">prod = paged for it · ship = delivered · expl = prototype / coursework</p>
+      <!-- <p class="mt-3 text-[#6a7568]">in production = run at scale · delivered = used in shipped software · prototype / coursework = explored</p> -->
     </section>
 
     <section class="mt-8" aria-labelledby="roles-heading">
@@ -155,14 +161,8 @@ cert    ClickHouse Certified Developer (A → P → Adv)</pre>
     </section>
 
     <footer class="mt-10 border-t border-[#2a3028] pt-4 text-[#6a7568]">
-      <Elsewhere class="text-[#9aab94] [&_a]:underline [&_a]:decoration-[#2a3028] hover:[&_a]:text-[#e4eadc]" />
+      <Elsewhere class="text-[#9aab94]" />
       <p class="mt-2">{site.openTo}</p>
-      <p class="mt-1">
-        Writing →{' '}
-        <a class="underline decoration-[#2a3028] hover:text-[#e4eadc]" href={site.links.medium} rel="noopener noreferrer"
-          >Medium</a
-        >
-      </p>
     </footer>
   </main>
 </Base>

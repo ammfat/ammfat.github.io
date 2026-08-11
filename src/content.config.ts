@@ -9,11 +9,24 @@ const projects = defineCollection({
       'storage',
       'ingestion',
       'orchestration',
-      'serving',
+      'analytics',
       'ai',
       'platform',
       'languages',
     ]),
+    // Multi-coverage for end-to-end projects (e.g. BLIV).
+    // `layer` is kept as a primary label for backwards compatibility.
+    layers: z.array(
+      z.enum([
+        'storage',
+        'ingestion',
+        'orchestration',
+        'analytics',
+        'ai',
+        'platform',
+        'languages',
+      ])
+    ).optional(),
     stack: z.array(z.string()),
     summary: z.string(),
     repo: z.string().url().optional(),

@@ -1,12 +1,18 @@
 ---
-title: BLIV national data platform
+title: Garuda-BLIV National Data Platform
 layer: storage
+layers:
+  - ingestion
+  - storage
+  - analytics
+  - ai
 stack:
   - ClickHouse
-  - Apache NiFi
-  - Apache Kafka
-  - Apache Superset
   - PostgreSQL
+  - MinIO
+  - Apache NiFi
+  - FastMCP
+  - Apache Superset
   - Ansible
 summary: Technical leadership and platform reliability for Kemendagri's national data platform.
 closed: true

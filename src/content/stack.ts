@@ -19,10 +19,11 @@ export const stackGroups: StackGroup[] = [
     items: [
       { name: 'ClickHouse', depth: 'production', note: '5+ TiB/day warehouse' },
       { name: 'PostgreSQL', depth: 'production' },
+      { name: 'Object Storage (MinIO, s3-compatibles)', depth: 'production' },
+      { name: 'Redis', depth: 'production' },
       { name: 'BigQuery', depth: 'shipped' },
-      { name: 'Redis', depth: 'explored' },
-      { name: 'MongoDB', depth: 'explored' },
-      { name: 'ChromaDB', depth: 'explored' },
+      { name: 'MongoDB', depth: 'shipped' },
+      { name: 'ChromaDB', depth: 'shipped' },
     ],
   },
   {
@@ -31,9 +32,8 @@ export const stackGroups: StackGroup[] = [
     items: [
       { name: 'Apache NiFi', depth: 'production', note: '300+ pipelines' },
       { name: 'Apache Kafka', depth: 'production' },
-      { name: 'Hadoop CDP / Hive', depth: 'shipped' },
-      { name: 'SFTP', depth: 'shipped' },
-      { name: 'Scraping pipelines', depth: 'shipped' },
+      { name: 'Hadoop CDP / Hive', depth: 'production' },
+      { name: 'Data Scraping', depth: 'production' },
     ],
   },
   {
@@ -47,28 +47,32 @@ export const stackGroups: StackGroup[] = [
     ],
   },
   {
-    id: 'serving',
-    label: 'Serving and interfaces',
+    id: 'web',
+    label: 'Web',
     items: [
       { name: 'FastAPI', depth: 'shipped' },
+    ],
+  },
+  {
+    id: 'analytics',
+    label: 'Analytics and interfaces',
+    items: [
       { name: 'Apache Superset', depth: 'production' },
       { name: 'Looker Studio', depth: 'shipped' },
-      { name: 'Grafana', depth: 'explored' },
+      { name: 'Grafana', depth: 'shipped' },
       { name: 'Streamlit', depth: 'shipped' },
-      { name: 'Vue 3', depth: 'shipped' },
     ],
   },
   {
     id: 'ai',
     label: 'AI and agents',
     items: [
-      { name: 'MCP', depth: 'shipped' },
-      { name: 'RAG / agentic LLM systems', depth: 'shipped' },
-      { name: 'Dify', depth: 'explored' },
-      { name: 'NVIDIA NIM', depth: 'explored' },
-      { name: 'Transformers', depth: 'shipped' },
+      { name: 'LLMs (OpenAI / Anthropic / Gemini)', depth: 'production' },
+      { name: 'FastMCP', depth: 'production' },
       { name: 'Keras', depth: 'shipped' },
-      { name: 'OpenAI / Anthropic / Gemini', depth: 'shipped' },
+      { name: 'Transformers', depth: 'shipped' },
+      { name: 'Dify AI', depth: 'explored' },
+      { name: 'NVIDIA NIM', depth: 'explored' },
     ],
   },
   {
@@ -77,11 +81,9 @@ export const stackGroups: StackGroup[] = [
     items: [
       { name: 'Linux', depth: 'production' },
       { name: 'Docker', depth: 'production' },
-      { name: 'Ansible', depth: 'production' },
       { name: 'GitHub Actions', depth: 'shipped' },
-      { name: 'Keycloak', depth: 'explored' },
+      { name: 'Ansible', depth: 'explored' },
       { name: 'Kubernetes', depth: 'explored' },
-      { name: 'Terraform', depth: 'explored' },
     ],
   },
   {
@@ -91,10 +93,7 @@ export const stackGroups: StackGroup[] = [
       { name: 'Python', depth: 'production' },
       { name: 'SQL', depth: 'production' },
       { name: 'Shell', depth: 'production' },
-      { name: 'Java', depth: 'explored' },
       { name: 'Go', depth: 'explored' },
-      { name: 'Dart', depth: 'explored' },
-      { name: 'JavaScript', depth: 'explored' },
     ],
   },
 ];

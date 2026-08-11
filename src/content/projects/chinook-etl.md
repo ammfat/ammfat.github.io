@@ -1,6 +1,8 @@
 ---
 title: chinook-etl
 layer: orchestration
+layers:
+  - orchestration
 stack:
   - BigQuery
   - Python
