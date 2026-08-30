@@ -10,9 +10,9 @@ const { id } = Astro.props;
 const tipId = `${id}-tip`;
 ---
 
-<span class="prof-disclaimer inline align-middle">
-  <span class="prof-disclaimer__wrap relative inline-flex items-center gap-0.5 align-middle">
-    <span class="prof-disclaimer__label">Professional</span>
+<span class="prof-disclaimer inline-flex items-center gap-0.5 align-middle">
+  <span class="prof-disclaimer__label">Professional</span>
+  <span class="prof-disclaimer__wrap relative inline-flex align-middle">
     <button
       type="button"
       class="prof-disclaimer__btn inline-flex items-center rounded-sm text-[#6b6458] hover:text-[#1c1a16] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[#8a8070]"
@@ -39,8 +39,8 @@ const tipId = `${id}-tip`;
     content: ' · ';
   }
 
-  .prof-disclaimer__wrap:hover .prof-disclaimer__tip,
-  .prof-disclaimer__wrap:focus-within .prof-disclaimer__tip,
+  .prof-disclaimer__btn:hover + .prof-disclaimer__tip,
+  .prof-disclaimer__btn:focus-visible + .prof-disclaimer__tip,
   .prof-disclaimer__btn[aria-expanded='true'] + .prof-disclaimer__tip {
     visibility: visible;
     opacity: 1;
