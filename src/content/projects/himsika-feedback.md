@@ -10,7 +10,7 @@ stack:
   - BigQuery
   - Looker Studio
 repo: https://github.com/ammfat/himsika-event-feedback-analysis
-summary: "End-to-end event feedback pipeline: Airflow -> BigQuery -> Looker Studio."
+summary: End-to-end event feedback pipeline. Bringing unstandardized scattered data with Airflow to BigQuery, and landed as analytical dashboard on Looker Studio.
 closed: false
 ---
 
