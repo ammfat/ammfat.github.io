@@ -34,6 +34,7 @@ const marks: Record<(typeof links)[number]['id'], { viewBox: string; d: string }
     links.map((link) => (
       <a
         href={link.href}
+        target="_blank"
         rel="noopener noreferrer"
         class="inline-flex h-8 w-8 items-center justify-center rounded-sm text-[#6b6458] hover:text-[#1c1a16]"
         aria-label={link.label}
