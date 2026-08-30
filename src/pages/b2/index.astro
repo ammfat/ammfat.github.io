@@ -1,0 +1,25 @@
+---
+import Base from '../../layouts/Base.astro';
+import ConceptNav from '../../components/ConceptNav.astro';
+import PlatformProfile from '../../components/PlatformProfile.astro';
+import { site } from '../../content/site';
+---
+
+<Base
+  title={`${site.shortName} · platform, revised`}
+  description={site.tagline}
+  bodyClass="bg-[#f4f1eb] text-[#1c1a16] font-sans antialiased min-h-screen"
+>
+  <link
+    slot="head"
+    href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,700&display=swap"
+    rel="stylesheet"
+  />
+  <PlatformProfile>
+    <ConceptNav
+      slot="nav"
+      current="b2"
+      class="mb-6 text-sm text-[#6b6458] [&_a]:underline [&_a]:decoration-[#cfc6b6] hover:[&_a]:text-[#1c1a16] [&_[aria-current=page]]:text-[#1c1a16] [&_[aria-current=page]]:font-medium"
+    />
+  </PlatformProfile>
+</Base>

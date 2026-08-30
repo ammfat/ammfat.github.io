@@ -3,9 +3,13 @@ import { site } from '../content/site';
 
 interface Props {
   class?: string;
+  linkClass?: string;
 }
 
-const { class: className = '' } = Astro.props;
+const {
+  class: className = '',
+  linkClass = 'underline decoration-[#2a3028] hover:text-[#e4eadc]',
+} = Astro.props;
 const links = [
   { href: site.links.github, label: 'GitHub' },
   { href: site.links.linkedin, label: 'LinkedIn' },
@@ -19,11 +23,7 @@ const links = [
     links.map((link, i) => (
       <>
         {i > 0 && <span aria-hidden="true"> · </span>}
-        <a
-          href={link.href}
-          rel="noopener noreferrer"
-          class="underline decoration-[#2a3028] hover:text-[#e4eadc]"
-        >
+        <a href={link.href} rel="noopener noreferrer" class={linkClass}>
           {link.label}
         </a>
       </>

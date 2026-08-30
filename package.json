@@ -7,7 +7,8 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "dev:fresh": "sh scripts/dev-fresh.sh",
+    "build": "astro build && rm -rf dist/a-terminal dist/b-platform dist/b2 dist/b2-connect dist/c-editorial dist/concepts",
     "preview": "astro preview",
     "astro": "astro"
   },

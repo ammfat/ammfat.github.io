@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 const preferredOrder = [
   'bliv',
   'clickhouse-warehouse',
+  'bqml-logistics',
   'superset-tooling',
   'universa',
   'mood-tracker',

@@ -1,0 +1,61 @@
+---
+import { site } from '../../content/site';
+
+interface Props {
+  class?: string;
+  showCopyright?: boolean;
+}
+
+const { class: className = '', showCopyright = true } = Astro.props;
+
+const actions = [
+  { kind: 'link' as const, href: site.links.email, label: 'Email me' },
+  { kind: 'copy' as const, label: 'Copy email' },
+  { kind: 'link' as const, href: site.links.github, label: 'GitHub' },
+  { kind: 'link' as const, href: site.links.linkedin, label: 'LinkedIn' },
+  { kind: 'link' as const, href: site.links.credly, label: 'Credly' },
+  { kind: 'link' as const, href: site.links.medium, label: 'Medium' },
+];
+
+const btnClass =
+  'block w-full rounded-sm border border-[#cfc6b6] bg-[#f7f4ee] px-4 py-2.5 text-center text-sm font-medium text-[#1c1a16] hover:border-[#8a8070]';
+---
+
+<footer class:list={['text-sm text-[#6b6458]', className]}>
+  <p class="font-[family-name:var(--font-display)] text-xl font-medium text-[#1c1a16]">
+    {site.openTo}
+  </p>
+  <ul class="mt-4 max-w-md space-y-2">
+    {
+      actions.map((action) => (
+        <li>
+          {action.kind === 'copy' ? (
+            <button
+              type="button"
+              class={btnClass}
+              data-copy-email={site.email}
+              aria-label="Copy email"
+            >
+              <span data-copy-label>{action.label}</span>
+            </button>
+          ) : (
+            <a
+              href={action.href}
+              class={btnClass}
+              rel={action.href.startsWith('mailto:') ? undefined : 'noopener noreferrer'}
+            >
+              {action.label}
+            </a>
+          )}
+        </li>
+      ))
+    }
+  </ul>
+  {
+    showCopyright && (
+      <p class="mt-4">
+        © {site.copyrightYear} {site.shortName}
+      </p>
+    )
+  }
+</footer>

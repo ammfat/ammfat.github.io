@@ -3,6 +3,8 @@ title: Superset Dev Tools
 layer: analytics
 layers:
   - analytics
+  - web
+  - ai
 stack:
   - Apache Superset
   - Python

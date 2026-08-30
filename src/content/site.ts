@@ -19,6 +19,13 @@ export const site = {
     credly: 'https://credly.com/users/ammfat',
     email: 'mailto:ahmad.mmfat@gmail.com',
   },
+  email: 'ahmad.mmfat@gmail.com',
   openTo:
-    "Anything to do with data orchestration, analytics, or AI? Let's connect!"
+    "Anything to do with data orchestration, analytics, or AI? Let's connect!",
+  connectHeading: "Let's work together",
+  connectSummary:
+    'I design and run warehouses and ETL at production scale, and build agents over that data.',
+  connectOpenPhrase: 'Open to opportunities',
+  connectOpenFocus: 'on data orchestration, analytics, and AI.',
+  copyrightYear: new Date().getFullYear(),
 };

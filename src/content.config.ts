@@ -13,6 +13,7 @@ const projects = defineCollection({
       'ai',
       'platform',
       'languages',
+      'web',
     ]),
     // Multi-coverage for end-to-end projects (e.g. BLIV).
     // `layer` is kept as a primary label for backwards compatibility.
@@ -25,11 +26,13 @@ const projects = defineCollection({
         'ai',
         'platform',
         'languages',
+        'web',
       ])
     ).optional(),
     stack: z.array(z.string()),
     summary: z.string(),
     repo: z.string().url().optional(),
+    article: z.string().url().optional(),
     closed: z.boolean().default(false),
   }),
 });

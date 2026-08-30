@@ -1,0 +1,512 @@
+---
+import ConnectDossier from './connect/ConnectDossier.astro';
+import InfoIcon from './InfoIcon.astro';
+import { site } from '../content/site';
+import { focusAreas } from '../content/focus';
+import {
+  b2Chips,
+  b2Featured,
+  b2FlowNodes,
+  b2Headline,
+  b2LayersForTool,
+  b2Metrics,
+  b2NodeTitle,
+  b2StackShelves,
+  mapProjectLayersToB2,
+} from '../content/b2';
+import { getProjects } from '../lib/projects';
+import { proficiencyLabel, projectLayers } from '../lib/labels';
+import { render } from 'astro:content';
+
+const skipIds = new Set(['bliv', 'clickhouse-warehouse']);
+const projects = (await getProjects()).filter((p) => !skipIds.has(p.id));
+const rendered = await Promise.all(
+  projects.map(async (p) => {
+    const layers = mapProjectLayersToB2(projectLayers(p.data));
+    return {
+      ...p,
+      layers,
+      Content: (await render(p)).Content,
+    };
+  }),
+);
+
+const spineNodes = b2FlowNodes.filter((n) => n.lane === 'spine');
+const serveNodes = b2FlowNodes.filter((n) => n.lane === 'serve');
+const olapNode = b2FlowNodes.find((n) => n.key === 'olap')!;
+const midY = (n: (typeof b2FlowNodes)[number]) => n.y + n.h / 2;
+const stemX = olapNode.x + olapNode.w + 28;
+---
+
+<main
+    class="mx-auto max-w-5xl px-4 py-10 sm:px-6"
+    id="platform-root"
+    data-filter=""
+  >
+    <slot name="nav" />
+
+    <header class="mb-10 max-w-2xl">
+      <p class="font-[family-name:var(--font-display)] text-3xl font-medium tracking-tight text-[#1c1a16] sm:text-4xl">
+        {site.name}
+      </p>
+      <p class="mt-2 text-lg text-[#3d3930]">{site.role}</p>
+      <p class="mt-4 text-[#4a453c]">{site.tagline}</p>
+      <p class="mt-3 text-sm text-[#6b6458]">{b2Headline}</p>
+      <ul class="mt-4 flex flex-wrap gap-x-6 gap-y-1 text-sm text-[#6b6458]">
+        {
+          b2Metrics.map((m) => (
+            <li>
+              <span class="uppercase tracking-wide">{m.label}</span>{' '}
+              {'href' in m ? (
+                <a
+                  href={m.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-start font-semibold text-[#1c1a16] hover:underline decoration-[#cfc6b6]"
+                >
+                  {m.value}
+                  <svg
+                    class="mt-0.5 ml-0.5 h-2.5 w-2.5 shrink-0 text-[#6b6458]"
+                    viewBox="0 0 10 10"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M2.5 1.5h6v6M8.5 1.5 2 8"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.4"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  <span class="sr-only"> (opens in a new tab)</span>
+                </a>
+              ) : (
+                <span class="font-semibold text-[#1c1a16]">{m.value}</span>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </header>
+
+    <section class="mb-12" aria-labelledby="focus-heading">
+      <h2 id="focus-heading" class="font-[family-name:var(--font-display)] text-xl font-medium">
+        Focus
+      </h2>
+      <ul class="mt-4 grid gap-4 sm:grid-cols-2">
+        {
+          focusAreas.map((f) => (
+            <li>
+              <p class="font-semibold text-[#1c1a16]">{f.title}</p>
+              <p class="mt-1 text-sm text-[#4a453c]">{f.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="mb-12" aria-labelledby="diagram-heading">
+      <div class="mb-3 flex flex-wrap items-end justify-between gap-2">
+        <h2 id="diagram-heading" class="font-[family-name:var(--font-display)] text-xl font-medium">
+          The Platform
+        </h2>
+        <p class="inline-flex items-center gap-1.5 text-sm text-[#6b6458]">
+          <InfoIcon />
+          <span>
+            Click to filter.
+            <button
+              type="button"
+              id="clear-filter"
+              class="ml-2 hidden underline decoration-[#cfc6b6]"
+              data-clear
+            >
+              Clear
+            </button>
+          </span>
+        </p>
+      </div>
+
+      <div class="overflow-x-auto rounded-sm border border-[#d9d0c0] bg-[#ebe6dc] p-4 sm:p-6" id="diagram">
+        <svg
+          viewBox="0 0 640 328"
+          class="mx-auto h-auto w-full min-w-[520px] max-w-3xl"
+          role="img"
+          aria-label="Data platform: source systems through ETL into an analytical store, then parallel dashboard, API, and agentic AI serving, with platform and ops underneath"
+        >
+          <defs>
+            <marker id="b2arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L6,3 L0,6 Z" fill="#8a8070"></path>
+            </marker>
+          </defs>
+          {
+            spineNodes.slice(0, -1).map((node, i) => (
+              <line
+                x1={node.x + node.w}
+                y1={midY(node)}
+                x2={spineNodes[i + 1].x}
+                y2={midY(spineNodes[i + 1])}
+                stroke="#8a8070"
+                stroke-width="1.5"
+                marker-end="url(#b2arrow)"
+              />
+            ))
+          }
+          <line
+            x1={olapNode.x + olapNode.w}
+            y1={midY(olapNode)}
+            x2={stemX}
+            y2={midY(olapNode)}
+            stroke="#8a8070"
+            stroke-width="1.5"
+          />
+          <line
+            x1={stemX}
+            y1={midY(serveNodes[0])}
+            x2={stemX}
+            y2={midY(serveNodes[serveNodes.length - 1])}
+            stroke="#8a8070"
+            stroke-width="1.5"
+          />
+          {
+            serveNodes.map((node) => (
+              <line
+                x1={stemX}
+                y1={midY(node)}
+                x2={node.x}
+                y2={midY(node)}
+                stroke="#8a8070"
+                stroke-width="1.5"
+                marker-end="url(#b2arrow)"
+              />
+            ))
+          }
+          {
+            b2FlowNodes.map((node) => (
+              <g
+                class="layer-node cursor-pointer"
+                data-layer={node.id}
+                tabindex="0"
+                role="button"
+                aria-pressed="false"
+                aria-label={`Filter by ${node.title}`}
+              >
+                <rect
+                  x={node.x}
+                  y={node.y}
+                  width={node.w}
+                  height={node.h}
+                  rx="4"
+                  class="fill-[#f7f4ee] stroke-[#8a8070] stroke-[1.5] transition-colors"
+                />
+                <g
+                  transform={`translate(${node.x + node.w / 2 - 8}, ${node.y + 8})`}
+                  class="pointer-events-none"
+                  aria-hidden="true"
+                >
+                  {node.key === 'txn' && (
+                    <>
+                      <ellipse
+                        cx="8"
+                        cy="3"
+                        rx="7"
+                        ry="2.4"
+                        class="layer-icon fill-none stroke-[#8a8070]"
+                        stroke-width="1.25"
+                      />
+                      <path
+                        d="M1 3 v8.5 c0 1.4 3.1 2.5 7 2.5 s7-1.1 7-2.5 V3"
+                        class="layer-icon fill-none stroke-[#8a8070]"
+                        stroke-width="1.25"
+                      />
+                    </>
+                  )}
+                  {node.key === 'etl' && (
+                    <>
+                      <path
+                        d="M1 5 h10 l-2.5 -2.5 M11 5 l-2.5 2.5"
+                        class="layer-icon fill-none stroke-[#8a8070]"
+                        stroke-width="1.25"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M1 11 h10 l-2.5 -2.5 M11 11 l-2.5 2.5"
+                        class="layer-icon fill-none stroke-[#8a8070]"
+                        stroke-width="1.25"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </>
+                  )}
+                  {node.key === 'olap' && (
+                    <>
+                      <ellipse
+                        cx="8"
+                        cy="3"
+                        rx="7"
+                        ry="2.4"
+                        class="layer-icon fill-none stroke-[#8a8070]"
+                        stroke-width="1.25"
+                      />
+                      <path
+                        d="M1 3 v8.5 c0 1.4 3.1 2.5 7 2.5 s7-1.1 7-2.5 V3"
+                        class="layer-icon fill-none stroke-[#8a8070]"
+                        stroke-width="1.25"
+                      />
+                      <path
+                        d="M1 7.5 c0 1.4 3.1 2.5 7 2.5 s7-1.1 7-2.5"
+                        class="layer-icon fill-none stroke-[#8a8070]"
+                        stroke-width="1.25"
+                      />
+                    </>
+                  )}
+                  {node.key === 'dashboard' && (
+                    <path
+                      d="M2 14 V8 M6 14 V4 M10 14 V10 M1 14 H15"
+                      class="layer-icon fill-none stroke-[#8a8070]"
+                      stroke-width="1.25"
+                      stroke-linecap="round"
+                    />
+                  )}
+                  {node.key === 'apis' && (
+                    <path
+                      d="M5.5 2 L1.5 8 L5.5 14 M10.5 2 L14.5 8 L10.5 14"
+                      class="layer-icon fill-none stroke-[#8a8070]"
+                      stroke-width="1.25"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  )}
+                  {node.key === 'agents' && (
+                    <>
+                      <circle cx="8" cy="3.5" r="2" class="layer-icon fill-none stroke-[#8a8070]" stroke-width="1.25" />
+                      <circle cx="3.5" cy="13" r="2" class="layer-icon fill-none stroke-[#8a8070]" stroke-width="1.25" />
+                      <circle cx="12.5" cy="13" r="2" class="layer-icon fill-none stroke-[#8a8070]" stroke-width="1.25" />
+                      <path
+                        d="M7 5.2 L4.6 11.2 M9 5.2 L11.4 11.2"
+                        class="layer-icon fill-none stroke-[#8a8070]"
+                        stroke-width="1.25"
+                      />
+                    </>
+                  )}
+                </g>
+                <text
+                  x={node.x + node.w / 2}
+                  y={node.y + node.h - 28}
+                  text-anchor="middle"
+                  class="fill-[#1c1a16] text-[13px] font-semibold"
+                  style="font-family: var(--font-sans)"
+                >
+                  {node.title}
+                </text>
+                <text
+                  x={node.x + node.w / 2}
+                  y={node.y + node.h - 12}
+                  text-anchor="middle"
+                  class="fill-[#6b6458] text-[11px] font-medium"
+                  style="font-family: var(--font-sans)"
+                >
+                  {node.subtitle}
+                </text>
+              </g>
+            ))
+          }
+          <g
+            class="layer-node cursor-pointer"
+            data-layer="platform"
+            tabindex="0"
+            role="button"
+            aria-pressed="false"
+            aria-label="Filter by Platform & Ops"
+          >
+            <rect
+              x="16"
+              y="272"
+              width="604"
+              height="40"
+              rx="4"
+              class="fill-[#e4ddd0] stroke-[#8a8070] stroke-[1.5]"
+            />
+            <text
+              x="318"
+              y="289"
+              text-anchor="middle"
+              class="fill-[#1c1a16] text-[13px] font-semibold"
+              style="font-family: var(--font-sans)"
+            >
+              Platform & Ops
+            </text>
+            <text
+              x="318"
+              y="304"
+              text-anchor="middle"
+              class="fill-[#6b6458] text-[11px] font-medium"
+              style="font-family: var(--font-sans)"
+            >
+              Containers, Config, and Observability
+            </text>
+          </g>
+        </svg>
+      </div>
+
+      <ul class="mt-4 flex flex-wrap gap-2" id="layer-chips" aria-label="Filter by pipeline stage">
+        {
+          b2Chips.map((chip) => (
+            <li>
+              <button
+                type="button"
+                class="layer-chip rounded-sm border border-[#cfc6b6] bg-[#f7f4ee] px-2.5 py-1 text-sm text-[#3d3930] hover:border-[#8a8070]"
+                data-layer={chip.id}
+                aria-pressed="false"
+              >
+                {chip.label}
+              </button>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <div class="grid gap-12 lg:grid-cols-2">
+      <section aria-labelledby="stack-heading">
+        <h2 id="stack-heading" class="font-[family-name:var(--font-display)] text-xl font-medium">
+          Stack and Proficiency
+        </h2>
+        <p class="mt-1 text-sm text-[#6b6458]">
+          Grouped by where it sits in the platform. Proficiency: production / personal projects / exploring.
+        </p>
+        <div class="mt-6 space-y-6">
+          {
+            b2StackShelves.map((shelf) => (
+              <div class="stack-group" data-layer={shelf.id}>
+                <h3 class="stack-group-heading text-sm font-semibold tracking-wide text-[#6b6458]">
+                  {shelf.label}
+                </h3>
+                <ul class="mt-2 space-y-1">
+                  {shelf.items.map((item) => (
+                    <li
+                      class="stack-item flex justify-between gap-3 border-b border-[#e0d8c8] py-1 text-sm"
+                      data-layers={b2LayersForTool(item.name).join(' ')}
+                    >
+                      <span>
+                        {item.name}
+                        {item.note && <span class="text-[#6b6458]"> — {item.note}</span>}
+                      </span>
+                      <span class="shrink-0 text-[#8a8070]">{proficiencyLabel[item.depth]}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <section aria-labelledby="work-heading">
+        <h2 id="work-heading" class="font-[family-name:var(--font-display)] text-xl font-medium">
+          Projects
+        </h2>
+        <p id="work-empty" class="mt-6 hidden text-sm text-[#6b6458]">
+          No projects on this stage. Try another stage.
+        </p>
+        <ul class="mt-6 space-y-6">
+          {
+            b2Featured.map((p) => (
+              <li class="work-item border-t border-[#d9d0c0] pt-4" data-layers={p.layers.join(' ')}>
+                <h3 class="font-semibold text-[#1c1a16]">{p.title}</h3>
+                <p class="mt-1 text-sm text-[#6b6458]">
+                  {p.layers.map(b2NodeTitle).join(' · ')}
+                  {p.closed ? ' · closed source' : ' · public'}
+                </p>
+                <p class="mt-2 text-[#3d3930]">{p.summary}</p>
+                <div class="mt-2 text-sm text-[#4a453c]">
+                  {p.body.map((para) => (
+                    <p class="mb-2">{para}</p>
+                  ))}
+                </div>
+              </li>
+            ))
+          }
+          {
+            rendered.map((p) => (
+              <li class="work-item border-t border-[#d9d0c0] pt-4" data-layers={p.layers.join(' ')}>
+                <h3 class="font-semibold text-[#1c1a16]">{p.data.title}</h3>
+                <p class="mt-1 text-sm text-[#6b6458]">
+                  {p.layers.map(b2NodeTitle).join(' · ')}
+                  {p.data.closed ? ' · closed source' : ' · public'}
+                  {p.data.article && (
+                    <>
+                      {' · '}
+                      <a
+                        class="underline decoration-[#cfc6b6] hover:text-[#1c1a16]"
+                        href={p.data.article}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        Medium
+                        <span class="sr-only"> (opens in a new tab)</span>
+                      </a>
+                    </>
+                  )}
+                  {p.data.repo && (
+                    <>
+                      {' · '}
+                      <a
+                        class="underline decoration-[#cfc6b6] hover:text-[#1c1a16]"
+                        href={p.data.repo}
+                        rel="noopener noreferrer"
+                      >
+                        GitHub
+                      </a>
+                    </>
+                  )}
+                </p>
+                <p class="mt-2 text-[#3d3930]">{p.data.summary}</p>
+                <div class="mt-2 text-sm text-[#4a453c] [&_p]:mb-2 [&_strong]:font-semibold">
+                  <p.Content />
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+    </div>
+
+    <ConnectDossier class="mt-16 border-t border-[#d9d0c0] pt-6" />
+  </main>
+
+  <style>
+    #platform-root .layer-node.is-active > rect {
+      fill: #1c1a16;
+      stroke: #1c1a16;
+    }
+
+    #platform-root .layer-node.is-active text {
+      fill: #f4f1eb;
+    }
+
+    #platform-root .layer-node.is-active .layer-icon {
+      stroke: #f4f1eb;
+    }
+
+    #platform-root .layer-chip.is-active {
+      border-color: #1c1a16;
+      background: #1c1a16;
+      color: #f4f1eb;
+    }
+  </style>
+
+  <script>
+    import { initB2Filter } from '../lib/b2-filter';
+    import { initConnectCopy } from '../lib/connect-copy';
+
+    const root = document.getElementById('platform-root');
+    if (!root) throw new Error('platform root missing');
+    initB2Filter(
+      root,
+      document.getElementById('clear-filter'),
+      document.getElementById('work-empty'),
+    );
+    initConnectCopy();
+  </script>

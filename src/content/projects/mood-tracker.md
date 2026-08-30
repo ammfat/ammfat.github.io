@@ -1,5 +1,5 @@
 ---
-title: mood-tracker
+title: Mood Tracker
 layer: ai
 layers:
   - ai

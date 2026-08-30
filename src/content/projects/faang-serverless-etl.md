@@ -1,5 +1,5 @@
 ---
-title: faang-serverless-etl
+title: Serverless ETL for Bloomberg Data
 layer: orchestration
 layers:
   - orchestration

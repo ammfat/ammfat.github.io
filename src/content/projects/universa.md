@@ -1,5 +1,5 @@
 ---
-title: Universa Multi-Agent Framework
+title: 'Universa AI: Multi-Agent Framework'
 layer: ai
 layers:
   - ai

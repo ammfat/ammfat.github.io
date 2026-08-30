@@ -1,0 +1,32 @@
+---
+interface Props {
+  current: 'a' | 'b' | 'b2' | 'c' | 'cta';
+  class?: string;
+}
+
+const { current, class: className = '' } = Astro.props;
+
+const items = [
+  { id: 'a', href: '/a-terminal/', label: 'A' },
+  { id: 'b', href: '/b-platform/', label: 'B' },
+  { id: 'b2', href: '/b2/', label: 'B2' },
+  { id: 'c', href: '/c-editorial/', label: 'C' },
+  { id: 'cta', href: '/b2-connect/', label: 'CTA' },
+  { id: 'live', href: '/', label: 'live' },
+] as const;
+---
+
+<nav class={className} aria-label="Concept switcher">
+  {
+    items.map((item, i) => (
+      <>
+        {i > 0 && <span aria-hidden="true"> · </span>}
+        {item.id === current ? (
+          <span aria-current="page">{item.label}</span>
+        ) : (
+          <a href={item.href}>{item.label}</a>
+        )}
+      </>
+    ))
+  }
+</nav>

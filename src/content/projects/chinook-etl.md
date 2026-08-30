@@ -1,5 +1,5 @@
 ---
-title: chinook-etl
+title: Chinook ETL
 layer: orchestration
 layers:
   - orchestration

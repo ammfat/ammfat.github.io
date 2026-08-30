@@ -1,0 +1,82 @@
+---
+import Base from '../../layouts/Base.astro';
+import { site } from '../../content/site';
+
+const concepts = [
+  {
+    href: '/a-terminal/',
+    id: 'A',
+    name: 'Operator',
+    blurb: 'Monospace status page. Dense, dark, runbook energy. Strongest for infra peers.',
+  },
+  {
+    href: '/b-platform/',
+    id: 'B',
+    name: 'Platform',
+    blurb: 'Interactive layer diagram. Stack and work filter by where they sit in the system.',
+  },
+  {
+    href: '/b2/',
+    id: 'B2',
+    name: 'Platform, revised',
+    blurb:
+      'Pipeline labels on the diagram, stack, and chips. Unique clicks; a stage lists tools on that hop.',
+  },
+  {
+    href: '/c-editorial/',
+    id: 'C',
+    name: 'Editorial',
+    blurb: 'Text-forward engineering site. Quiet typography, case studies first. Recruiter-legible.',
+  },
+  {
+    href: '/b2-connect/',
+    id: 'CTA',
+    name: 'Connect variants',
+    blurb: 'Four B2 footers — Quiet, Stack, Dossier, Hybrid — same cream/ink skin. Pick a winner.',
+  },
+];
+---
+
+<Base
+  title={`${site.shortName} · choose a profile`}
+  description="Profile concepts for ammfat.github.io — same site, several layouts."
+  bodyClass="bg-[#111] text-[#e8e4dc] antialiased min-h-screen"
+>
+  <link
+    slot="head"
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <main class="mx-auto max-w-xl px-5 py-16 sm:py-24" style="font-family: 'IBM Plex Sans', sans-serif">
+    <p class="text-sm uppercase tracking-[0.12em] text-[#7a756c]">ammfat.github.io · local comparison</p>
+    <h1 class="mt-3 text-3xl font-semibold tracking-tight text-[#f5f2ea]">Profile concepts</h1>
+    <p class="mt-4 text-[#b8b2a6]">
+      Live Operator stays at{' '}
+      <a href="/" class="text-[#e8e4dc] underline decoration-[#3a3a2a]">/</a>. Concept B is the original
+      platform diagram; B2 uses pipeline labels on the diagram, stack, and chips.
+      These paths are local review only — they are not promoted until you choose one.
+    </p>
+
+    <ul class="mt-10 space-y-4">
+      {
+        concepts.map((c) => (
+          <li>
+            <a
+              href={c.href}
+              class="block border border-[#2a2a2a] bg-[#181818] px-5 py-4 transition hover:border-[#5a6a58] hover:bg-[#1c1c1c]"
+            >
+              <span class="text-sm text-[#7a756c]">Concept {c.id}</span>
+              <span class="mt-1 block text-xl font-semibold text-[#f5f2ea]">{c.name}</span>
+              <span class="mt-2 block text-sm leading-relaxed text-[#b8b2a6]">{c.blurb}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="mt-12 text-sm text-[#7a756c]">
+      {site.name} · {site.role}
+    </p>
+  </main>
+</Base>

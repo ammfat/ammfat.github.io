@@ -20,6 +20,7 @@ export const stackGroups: StackGroup[] = [
       { name: 'ClickHouse', depth: 'production', note: '5+ TiB/day warehouse' },
       { name: 'PostgreSQL', depth: 'production' },
       { name: 'Object Storage (MinIO, s3-compatibles)', depth: 'production' },
+      { name: 'Google Cloud Storage', depth: 'shipped' },
       { name: 'Redis', depth: 'production' },
       { name: 'BigQuery', depth: 'shipped' },
       { name: 'MongoDB', depth: 'shipped' },
@@ -59,8 +60,15 @@ export const stackGroups: StackGroup[] = [
     items: [
       { name: 'Apache Superset', depth: 'production' },
       { name: 'Looker Studio', depth: 'shipped' },
-      { name: 'Grafana', depth: 'shipped' },
       { name: 'Streamlit', depth: 'shipped' },
+    ],
+  },
+  {
+    id: 'observability',
+    label: 'Observability and monitoring',
+    items: [
+      { name: 'Grafana', depth: 'production' },
+      { name: 'Weights & Biases', depth: 'shipped' },
     ],
   },
   {

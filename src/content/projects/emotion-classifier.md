@@ -1,5 +1,5 @@
 ---
-title: emotion-classifier
+title: Emotion Classifier
 layer: ai
 layers:
   - ai

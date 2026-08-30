@@ -1,0 +1,114 @@
+---
+import SocialIcons from './SocialIcons.astro';
+import { site } from '../../content/site';
+
+interface Props {
+  class?: string;
+  showCopyright?: boolean;
+}
+
+const { class: className = '', showCopyright = true } = Astro.props;
+---
+
+<footer class:list={['text-sm text-[#6b6458]', className]}>
+  <div class="grid gap-10 border border-[#d9d0c0] bg-[#f7f4ee] p-6 sm:p-8 md:grid-cols-2 md:gap-12">
+    <div>
+      <p class="font-[family-name:var(--font-display)] text-3xl font-medium tracking-tight text-[#1c1a16]">
+        {site.connectHeading}
+      </p>
+      <p class="mt-4 max-w-prose leading-relaxed text-[#3d3930]">
+        {site.connectSummary}{' '}
+        <strong class="font-semibold text-[#1c1a16]">{site.connectOpenPhrase}</strong>
+        {' '}
+        {site.connectOpenFocus}
+      </p>
+    </div>
+    <div>
+      <ul class="divide-y divide-[#e0d8c8] border-y border-[#e0d8c8]">
+        <li class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 py-3">
+          <span class="text-xs font-semibold uppercase tracking-wide text-[#6b6458]">Location</span>
+          <span class="text-[#1c1a16]">{site.location}</span>
+        </li>
+        <li class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 py-3">
+          <span class="text-xs font-semibold uppercase tracking-wide text-[#6b6458]">Status</span>
+          <span class="text-[#1c1a16]">Open to opportunities</span>
+        </li>
+      </ul>
+
+      <div class="mt-5 flex flex-col items-stretch gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-3">
+        <div
+          class="inline-flex min-h-10 w-full overflow-hidden rounded-sm border border-[#1c1a16] bg-[#1c1a16] text-sm font-medium text-[#f4f1eb] sm:w-auto"
+        >
+          <button
+            type="button"
+            class="inline-flex min-h-10 w-10 shrink-0 items-center justify-center text-[#f4f1eb] hover:bg-[#3d3930]"
+            data-copy-email={site.email}
+            aria-label="Copy email"
+          >
+            <svg
+              data-copy-icon
+              class="h-3.5 w-3.5"
+              viewBox="0 0 16 16"
+              fill="none"
+              aria-hidden="true"
+            >
+              <rect
+                x="5.5"
+                y="5.5"
+                width="8"
+                height="8"
+                rx="1"
+                stroke="currentColor"
+                stroke-width="1.25"></rect>
+              <path
+                d="M3.5 10.5V3.5h7"
+                stroke="currentColor"
+                stroke-width="1.25"
+                stroke-linecap="round"></path>
+            </svg>
+            <svg
+              data-copied-icon
+              class="hidden h-3.5 w-3.5"
+              viewBox="0 0 16 16"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M3.5 8.5 6.5 11.5 12.5 4.5"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"></path>
+            </svg>
+            <span class="sr-only" data-copy-label>Copy</span>
+          </button>
+          <span class="my-2.5 w-px shrink-0 bg-[#f4f1eb]/20" aria-hidden="true"></span>
+          <a
+            href={site.links.email}
+            class="inline-flex min-h-10 flex-1 items-center justify-center px-4 hover:bg-[#3d3930] sm:flex-none sm:justify-start"
+          >
+            Email me
+          </a>
+        </div>
+        <span class="self-center text-[#6b6458]">or</span>
+        <a
+          href={site.links.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex min-h-10 w-full items-center justify-center rounded-sm border border-[#1c1a16] bg-[#1c1a16] px-4 text-sm font-medium text-[#f4f1eb] hover:border-[#3d3930] hover:bg-[#3d3930] sm:w-auto"
+        >
+          Connect on LinkedIn
+        </a>
+      </div>
+
+      <SocialIcons class="mt-2" />
+    </div>
+  </div>
+  {
+    showCopyright && (
+      <p class="mt-4">
+        © {site.copyrightYear} {site.shortName}
+      </p>
+    )
+  }
+</footer>
