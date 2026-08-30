@@ -11,4 +11,4 @@ summary: Serverless ETL from Bloomberg API into BigQuery.
 closed: false
 ---
 
-Serverless path from Bloomberg market data into BigQuery — scheduled extract, transform, and load without maintaining a long-lived worker.
+Serverless path from Bloomberg market data into BigQuery. With scheduled extract, transform, and load without maintaining a long-lived worker.

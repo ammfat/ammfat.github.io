@@ -262,8 +262,8 @@ export const b2Featured = [
     summary:
       'Technical lead on progress-monitoring dashboards for presidential-priority programs, including how the public sees those programs and Kemendagri itself.',
     body: [
-      'Dashboards track delivery of presidential-priority programs. The same serving layer supports monitoring of public perception — of the programs, and of the ministry.',
-      'After Kemendagri licensed the platform, this team stays on for technical support: warehouse and BI uptime, and unblocking software and data engineers. Data science and AI engineering on the same program sit with a different technical lead. An MCP server exposes Superset so agents can ask the same data the dashboards already serve.',
+      'Dashboards track delivery of presidential-priority programs. The same serving layer supports monitoring of public perception on the programs and of the ministry.',
+      'After Kemendagri licensed the platform, this team stays on for technical support: warehouse and BI uptime, and unblocking software and data engineers. An MCP server exposes Superset so agents can ask the same data the dashboards already serve.',
     ],
   },
   {
@@ -273,7 +273,7 @@ export const b2Featured = [
     stack: ['ClickHouse', 'PostgreSQL', 'Apache Superset'],
     closed: true,
     summary:
-      'Technical lead on analytics over SIPD: budget allocation and realization for Indonesia’s local governments — Postgres into ClickHouse, then dashboards. Not the transactional SIPD application itself.',
+      'Technical lead on analytics over SIPD: budget allocation and realization for Indonesia\'s local governments. Organize team to brings the data from Postgres into ClickHouse, then dashboards.',
     body: [
       'Operational systems at each local government remain the source of truth. This work is the analytics path: Postgres into ClickHouse, then dashboards that compare plan versus spend across regions.',
       'The job is correctness under messy source systems — reconciling warehouse figures with the originating databases, and keeping the serving layer honest when schemas and stages change.',
