@@ -1,0 +1,84 @@
+---
+import InfoIcon from './InfoIcon.astro';
+import { site } from '../content/site';
+
+interface Props {
+  id: string;
+}
+
+const { id } = Astro.props;
+const tipId = `${id}-tip`;
+---
+
+<span class="prof-disclaimer inline align-middle">
+  <span class="prof-disclaimer__wrap relative inline-flex items-center gap-0.5 align-middle">
+    <span class="prof-disclaimer__label">Professional</span>
+    <button
+      type="button"
+      class="prof-disclaimer__btn inline-flex items-center rounded-sm text-[#6b6458] hover:text-[#1c1a16] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[#8a8070]"
+      aria-label="Employment work disclaimer"
+      aria-expanded="false"
+      aria-controls={tipId}
+      data-prof-disclaimer-btn
+    >
+      <InfoIcon class="h-2.5 w-2.5" />
+    </button>
+    <span
+      id={tipId}
+      role="tooltip"
+      class="prof-disclaimer__tip pointer-events-none invisible absolute left-1/2 top-full z-10 mt-1.5 w-56 -translate-x-1/2 rounded-sm border border-[#d9d0c0] bg-[#f7f4ee] px-2.5 py-2 text-xs leading-snug text-[#3d3930] opacity-0 shadow-sm sm:w-64"
+      data-prof-disclaimer-tip
+    >
+      {site.professionalDisclaimer}
+    </span>
+  </span>
+</span>
+
+<style>
+  .prof-disclaimer::before {
+    content: ' · ';
+  }
+
+  .prof-disclaimer__wrap:hover .prof-disclaimer__tip,
+  .prof-disclaimer__wrap:focus-within .prof-disclaimer__tip,
+  .prof-disclaimer__btn[aria-expanded='true'] + .prof-disclaimer__tip {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+  }
+</style>
+
+<script>
+  let listenersBound = false;
+
+  function closeAll() {
+    document.querySelectorAll('[data-prof-disclaimer-btn][aria-expanded="true"]').forEach((btn) => {
+      btn.setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  function initProfessionalDisclaimers() {
+    document.querySelectorAll('[data-prof-disclaimer-btn]').forEach((btn) => {
+      if (!(btn instanceof HTMLButtonElement) || btn.dataset.profInit) return;
+      btn.dataset.profInit = '1';
+
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const open = btn.getAttribute('aria-expanded') !== 'true';
+        closeAll();
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    });
+
+    if (!listenersBound) {
+      listenersBound = true;
+      document.addEventListener('click', closeAll);
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeAll();
+      });
+    }
+  }
+
+  initProfessionalDisclaimers();
+  document.addEventListener('astro:page-load', initProfessionalDisclaimers);
+</script>

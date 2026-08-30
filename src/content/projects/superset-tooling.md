@@ -10,6 +10,7 @@ stack:
   - Python
 summary: No more wasting time on low-level maintenance. Effortlessly swap datasets and bulk-resave 100+ charts. For sure it's all reversible.
 closed: true
+context: professional
 ---
 
 When a warehouse schema moves, hundreds of Superset charts become wrong at once. Manual edits do not scale and leave no audit trail.

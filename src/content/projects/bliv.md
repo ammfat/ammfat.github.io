@@ -16,6 +16,7 @@ stack:
   - Ansible
 summary: Technical leadership and platform reliability for Kemendagri's national data platform.
 closed: true
+context: professional
 ---
 
 BLIV is the analytical backbone for Indonesia's Ministry of Home Affairs. As Technical Lead I own direction across delivery, reliability, and how stakeholder needs become engineering work.

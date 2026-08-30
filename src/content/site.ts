@@ -27,5 +27,7 @@ export const site = {
     'I design and run warehouses and ETL at production scale, and build agents over that data.',
   connectOpenPhrase: 'Open to opportunities',
   connectOpenFocus: 'on data orchestration, analytics, and AI.',
+  professionalDisclaimer:
+    'Work I contributed to as an employee or contractor. Products, code, and IP belong to the employer or client.',
   copyrightYear: new Date().getFullYear(),
 };

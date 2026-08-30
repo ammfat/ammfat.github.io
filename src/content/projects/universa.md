@@ -10,6 +10,7 @@ stack:
   - RAG / agentic LLM systems
 summary: Co-authored a Graph-of-Thought and MCP-like agent framework and managed three intern squads delivering NLP and RAG work.
 closed: true
+context: professional
 ---
 
 At Universa AI I co-authored the foundational agent base classes, the tool layer, and graph-based orchestration on a model-agnostic Graph-of-Thought and MCP-like framework.

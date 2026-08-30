@@ -14,6 +14,7 @@ stack:
   - Ansible
 summary: Production ClickHouse warehouse — migration, failure recovery, and replication repair at multi-tebibyte daily ingest.
 closed: true
+context: professional
 ---
 
 Built and operated a ClickHouse warehouse ingesting **5+ TiB/day** from Kafka, SFTP, Hadoop CDP, and scraping pipelines, fed by **300+ Apache NiFi** flows for ingestion, marts, and self-monitoring.

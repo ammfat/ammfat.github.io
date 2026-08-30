@@ -246,6 +246,7 @@ export const b2Featured = [
     layers: ['etl', 'storage'] as const,
     stack: ['ClickHouse', 'Apache NiFi', 'Apache Kafka', 'Hadoop CDP', 'SFTP'],
     closed: true,
+    context: 'professional' as const,
     summary:
       'Data engineer on Telkomsel’s near-realtime warehouse: ClickHouse ingest at 5+ TiB/day behind 300+ Apache NiFi pipelines.',
     body: [
@@ -259,6 +260,7 @@ export const b2Featured = [
     layers: ['etl', 'storage', 'platform', 'dashboard', 'ai'] as const,
     stack: ['ClickHouse', 'PostgreSQL', 'Apache Superset', 'FastMCP'],
     closed: true,
+    context: 'professional' as const,
     summary:
       'Technical lead on progress-monitoring dashboards for presidential-priority programs, including how the public sees those programs and Kemendagri itself.',
     body: [
@@ -272,6 +274,7 @@ export const b2Featured = [
     layers: ['etl', 'dashboard', 'storage'] as const,
     stack: ['ClickHouse', 'PostgreSQL', 'Apache Superset'],
     closed: true,
+    context: 'professional' as const,
     summary:
       'Technical lead on analytics over SIPD: budget allocation and realization for Indonesia\'s local governments. Organize team to brings the data from Postgres into ClickHouse, then dashboards.',
     body: [
