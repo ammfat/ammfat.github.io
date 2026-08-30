@@ -419,7 +419,12 @@ const stemX = olapNode.x + olapNode.w + 28;
                 <p class="mt-1 text-sm text-[#6b6458]">
                   {p.layers.map(b2NodeTitle).join(' · ')}
                   {p.closed ? ' · closed source' : ' · public'}
-                  {p.context === 'professional' && <ProfessionalDisclaimer id={`prof-${p.id}`} />}
+                  {p.context === 'professional' && (
+                    <>
+                      {' · '}
+                      <ProfessionalDisclaimer id={`prof-${p.id}`} />
+                    </>
+                  )}
                 </p>
                 <p class="mt-2 text-[#3d3930]">{p.summary}</p>
                 <div class="mt-2 text-sm text-[#4a453c]">
@@ -438,7 +443,10 @@ const stemX = olapNode.x + olapNode.w + 28;
                   {p.layers.map(b2NodeTitle).join(' · ')}
                   {p.data.closed ? ' · closed source' : ' · public'}
                   {p.data.context === 'professional' && (
-                    <ProfessionalDisclaimer id={`prof-${p.id}`} />
+                    <>
+                      {' · '}
+                      <ProfessionalDisclaimer id={`prof-${p.id}`} />
+                    </>
                   )}
                   {p.data.article && (
                     <>
